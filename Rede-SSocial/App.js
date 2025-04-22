@@ -1,12 +1,11 @@
-// Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
-import { React } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import TabsNavigator from '../Rede-SSocial/src/screens/TabNavigator';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <TabsNavigator />
     </View>
   );
 }
@@ -15,7 +14,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
 });
