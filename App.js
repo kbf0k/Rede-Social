@@ -3,6 +3,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 import Inicio from './src/screens/Home';
 import PerfilScreen from './src/screens/Perfil';
@@ -15,27 +17,50 @@ import { NavigationContainer } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+function CustomHeader({ navigation }) {
+  return (
+    <View style={styles.headerContainer}>
+      <Image
+        style={styles.logo_nav}
+        source={require('./src/assets/img/logo.png')}
+        resizeMode="contain"
+      />
+      <View style={styles.menuIcon}>
+        <TouchableOpacity onPress={() => navigation.navigate('Direct')}>
+          <FontAwesome style={styles.icone} name="send" size={24} color="white" />
+          <Text style={styles.direct}>Direct</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+
 function TabsNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Inicio"
       screenOptions={({ route }) => ({
-        headerStyle: {
-          backgroundColor: '#4a90e2',
-        },
-        headerTintColor: '#fff',
+        header: (props) => <CustomHeader {...props} />,
         tabBarStyle: {
-          backgroundColor: '#4a90e2',
+          backgroundColor: '#00b5b8',
           borderTopWidth: 0,
+          height: 60,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20
         },
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: 'rgba(255,255,255,0.5)',
+        tabBarLabelStyle: {
+          fontSize: 12,
+          marginBottom: 4,
+        },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           switch (route.name) {
             case 'Novo post':
-              iconName = focused ? 'list' : 'list-outline';
+              iconName = focused ? 'camera' : 'camera-outline';
               break;
             case 'Inicio':
               iconName = focused ? 'home' : 'home-outline';
@@ -48,17 +73,6 @@ function TabsNavigator() {
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: '#fff',
-        tabBarInactiveTintColor: 'rgba(255,255,255,0.5)',
-        tabBarStyle: {
-          backgroundColor: '#4a90e2',
-          borderTopWidth: 0,
-          height: 60,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          marginBottom: 4,
         },
       })}
     >
@@ -77,7 +91,42 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} screenOptions={{ headerShown: false }} />
         <Stack.Screen name="Cadastro" component={Cadastro} screenOptions={{ headerShown: false }} />
         <Stack.Screen name="Inicio" component={TabsNavigator} screenOptions={{ headerShown: false }} />
+        <Stack.Screen name="Direct" component={Direct} screenOptions={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    backgroundColor: '#ff8c00',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20
+  },
+  logo_nav: {
+    width: 120,
+    height: 100,
+  },
+
+  icone: {
+    alignSelf: 'center'
+  },
+
+  direct: {
+    alignContent: 'center',
+    alignSelf: 'center',
+    color: '#fff',
+    fontFamily: 'Poppins-Regular',
+  }
+});

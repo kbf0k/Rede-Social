@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { getAuth, singInWithEmailAndPassword } from 'firebase/auth';
 import app from '../../FirebaseConfig'
 
-export default function Direct() {
+export default function Direct({ navigation }) {
     return (
         <View style={styles.container}>
             <Text>Direct</Text>
