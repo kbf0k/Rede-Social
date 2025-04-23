@@ -6,7 +6,6 @@ export default function Inicio() {
   return (
     <View style={styles.container}>
       <Text>Início</Text>
-      {/* <StatusBar style="auto" /> */}
     </View>
   );
 }
