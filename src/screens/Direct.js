@@ -1,4 +1,5 @@
-// Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';

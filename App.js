@@ -1,4 +1,5 @@
-// Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
+
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -70,6 +71,9 @@ function TabsNavigator() {
               break;
             case 'Inicio':
               iconName = focused ? 'home' : 'home-outline';
+              break;
+            case 'Notificações':
+              iconName = focused ? 'notifications' : 'notifications-outline';
               break;
             case 'Perfil':
               iconName = focused ? 'person' : 'person-outline';

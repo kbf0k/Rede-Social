@@ -49,13 +49,28 @@ export default function Notificacoes() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  titulo: { fontSize: 22, fontWeight: 'bold', marginBottom: 10 },
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
+},
+  titulo: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 10
+},
   notificacao: {
     backgroundColor: '#f2f2f2',
     padding: 12,
     borderRadius: 8,
     marginBottom: 10,
+    borderLeftWidth: 5,
+    borderLeftColor: '#4A90E2',
   },
   texto: { fontSize: 16 },
   data: { fontSize: 12, color: '#555', marginTop: 4 },
