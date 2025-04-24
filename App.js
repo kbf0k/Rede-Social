@@ -10,6 +10,7 @@ import Inicio from './src/screens/Home';
 import PerfilScreen from './src/screens/Perfil';
 import NovoPostScreen from './src/screens/NovoPost';
 import ChatScreen from './src/screens/ChatScreen';
+import NotificacoesScreen from './src/screens/Notificacoes';
 import Direct from './src/screens/Direct';
 import TelaSplash from './src/screens/TelaSplash';
 import Login from './src/screens/Login';
@@ -83,6 +84,7 @@ function TabsNavigator() {
     >
       <Tab.Screen name="Novo post" component={NovoPostScreen} />
       <Tab.Screen name="Inicio" component={Inicio} />
+      <Tab.Screen name="Notificações" component={NotificacoesScreen} />
       <Tab.Screen name="Perfil" component={PerfilScreen} />
     </Tab.Navigator>
   );

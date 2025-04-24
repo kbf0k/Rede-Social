@@ -1,4 +1,5 @@
 // Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
+
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
 import { db } from '../../FirebaseConfig';
@@ -24,6 +25,7 @@ export default function NovoPost() {
         titulo,
         descricao,
         autor: user.email,
+        autorUid: user.uid,
         data: serverTimestamp(),
       });
 

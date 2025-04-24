@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
+
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   StyleSheet, Text, View, FlatList, TouchableOpacity,
   TextInput, Pressable, KeyboardAvoidingView, Platform, ScrollView
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { db } from '../../FirebaseConfig';
 import { collection, getDocs, query, orderBy, addDoc, serverTimestamp, getDoc, doc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
@@ -13,20 +16,27 @@ export default function Inicio() {
   const [comentarios, setComentarios] = useState([]);
   const [novoComentario, setNovoComentario] = useState('');
 
+  const carregarPosts = async () => {
+    const q = query(collection(db, 'posts'), orderBy('data', 'desc'));
+    const querySnapshot = await getDocs(q);
+    const lista = await Promise.all(querySnapshot.docs.map(async (docSnap) => {
+      const post = docSnap.data();
+      const userDoc = await getDoc(doc(db, 'usuarios', post.autor));
+      const nomeAutor = userDoc.exists() ? userDoc.data().nome : post.autor;
+      return { id: docSnap.id, ...post, nomeAutor };
+    }));
+    setPosts(lista);
+  };
+
   useEffect(() => {
-    const carregarPosts = async () => {
-      const q = query(collection(db, 'posts'), orderBy('data', 'desc'));
-      const querySnapshot = await getDocs(q);
-      const lista = await Promise.all(querySnapshot.docs.map(async (docSnap) => {
-        const post = docSnap.data();
-        const userDoc = await getDoc(doc(db, 'usuarios', post.autor));
-        const nomeAutor = userDoc.exists() ? userDoc.data().nome : post.autor;
-        return { id: docSnap.id, ...post, nomeAutor };
-      }));
-      setPosts(lista);
-    };
     carregarPosts();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      carregarPosts();
+    }, [])
+  );
 
   const carregarComentarios = async (postId) => {
     const q = query(collection(db, 'posts', postId, 'comentarios'), orderBy('data'));
@@ -45,26 +55,55 @@ export default function Inicio() {
     await carregarComentarios(post.id);
   };
 
+  // const comentar = async () => {
+  //   if (!novoComentario.trim()) return;
+
+  //   const auth = getAuth();
+  //   const user = auth.currentUser;
+  //   if (!user || !selectedPost) return;
+
+  //   await addDoc(collection(db, 'posts', selectedPost.id, 'comentarios'), {
+  //     autor: user.email,
+  //     texto: novoComentario,
+  //     data: serverTimestamp(),
+  //   });
+
+  //   setNovoComentario('');
+  //   await carregarComentarios(selectedPost.id);
+  // };
+
   const comentar = async () => {
     if (!novoComentario.trim()) return;
-
+  
     const auth = getAuth();
     const user = auth.currentUser;
     if (!user || !selectedPost) return;
-
+  
     await addDoc(collection(db, 'posts', selectedPost.id, 'comentarios'), {
       autor: user.email,
+      autorUid: user.uid,
       texto: novoComentario,
       data: serverTimestamp(),
     });
-
+  
+    // 🔔 Criar notificação para o autor do post
+    if (user.email !== selectedPost.autor) {
+      await addDoc(collection(db, 'users', selectedPost.autorUid, 'notificacoes'), {
+        tipo: 'comentario',
+        texto: `${user.email} comentou em sua publicação: "${selectedPost.titulo}"`,
+        data: serverTimestamp(),
+        postId: selectedPost.id,
+        lido: false,
+      });
+    }
+  
     setNovoComentario('');
     await carregarComentarios(selectedPost.id);
-  };
+  };  
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 30, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}>
       {selectedPost && (
           <View style={styles.postSelecionado}>
             <Pressable style={styles.botaoFechar} onPress={() => setSelectedPost(null)}>
@@ -164,7 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   botao: {
-    backgroundColor: '#00b5b8',
+    backgroundColor: '#4A90E2',
     padding: 12,
     borderRadius: 6,
     alignItems: 'center',
