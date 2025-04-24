@@ -1,17 +1,23 @@
 // Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity } from 'react-native';
+import * as ImagePicker from "expo-image-picker";
 import { getFirestore, updateDoc, getDocs, collection, doc } from 'firebase/firestore';
 import { getAuth, updateEmail, updatePassword } from 'firebase/auth';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import app from '../../FirebaseConfig';
+import s3 from '../../awsConfig'
+
 
 const db = getFirestore(app);
+
+const S3_BUCKET = "bucket-storage-alpha";
 
 
 export default function Perfil() {
   const [usuarios, setUsuarios] = useState([]);
   const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
+  const [imageUri, setImageUri] = useState(null);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setsenha] = useState('');
@@ -55,6 +61,34 @@ export default function Perfil() {
     carregarUsuarios();
   }, []);
 
+
+
+  const uploadToS3 = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      const filename = uri.substring(uri.lastIndexOf('/') + 1);
+      const filePath = `imagem_usuario/${email}/${filename}`;
+
+      const uploadParams = {
+        Bucket: S3_BUCKET,
+        Key: filePath,
+        Body: blob,
+        ContentType: 'image/jpeg',
+        ACL: 'public-read',
+      };
+
+      const data = await s3.upload(uploadParams).promise();
+      return data.Location; // URL pública da imagem
+    } catch (error) {
+      console.error('Erro no upload da imagem:', error);
+      throw error;
+    }
+  };
+
+
+
   const editarUsuario = async () => {
     if (!usuarioSelecionado) return;
 
@@ -63,10 +97,18 @@ export default function Perfil() {
     const user = auth.currentUser;
 
     try {
+      let imageUrl = usuarioSelecionado.imageUrl;
+
+      if (imageUri) {
+        const fileName = `${usuarioSelecionado.id}.jpg`;
+        imageUrl = await uploadToS3(imageUri, fileName);
+      }
+
       // Atualiza dados no Firestore
       await updateDoc(usuarioRef, {
         nome: nome,
         email: email,
+        imageUrl: imageUrl,
       });
 
       // Atualiza o e-mail e senha do Authentication
@@ -75,15 +117,23 @@ export default function Perfil() {
         await updatePassword(user, senha);
       }
 
-      // Atualiza a senha também no Firestore (por consistência, embora não recomendado em texto puro)
-      await updateDoc(usuarioRef, {
-        senha: senha,
-      });
-
       setAlertVisible(true);
     } catch (error) {
       console.error("Erro ao atualizar dados:", error);
       alert("Erro ao atualizar o usuário: " + error.message);
+    }
+  };
+
+
+
+  const pickimage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImageUri(result.assets[0].uri);
     }
   };
 
@@ -92,17 +142,14 @@ export default function Perfil() {
       <View style={styles.container_Box}>
         <View style={styles.box}>
           <Text style={styles.title}>Meu Perfil</Text>
-          {usuarioSelecionado?.imageUrl ? (
+          <TouchableOpacity onPress={pickimage}>
             <Image
               style={styles.image}
-              source={{ uri: usuarioSelecionado.imageUrl }}
+              source={{
+                uri: imageUri || usuarioSelecionado?.imageUrl || undefined
+              }}
             />
-          ) : (
-            <Image
-              style={styles.image}
-              source={require('../assets/img/avatar.png')}
-            />
-          )}
+          </TouchableOpacity>
 
           <TextInput
             placeholder="Nome"
