@@ -15,7 +15,7 @@ export default function Perfil() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setsenha] = useState('');
-  const [alertVisible, setAlertVisible] = useState(false);
+  const [showAlert, setAlertVisible] = useState(false);
 
   useEffect(() => {
     const carregarUsuarios = async () => {
@@ -89,77 +89,101 @@ export default function Perfil() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.box}>
-        <Text style={styles.title}>Meu Perfil</Text>
-        {usuarioSelecionado?.imageUrl ? (
-          <Image
-            style={styles.image}
-            source={{ uri: usuarioSelecionado.imageUrl }}
-          />
-        ) : (
-          <Image
-            style={styles.image}
-            source={require('../assets/img/avatar.png')}
-          />
-        )}
+      <View style={styles.container_Box}>
+        <View style={styles.box}>
+          <Text style={styles.title}>Meu Perfil</Text>
+          {usuarioSelecionado?.imageUrl ? (
+            <Image
+              style={styles.image}
+              source={{ uri: usuarioSelecionado.imageUrl }}
+            />
+          ) : (
+            <Image
+              style={styles.image}
+              source={require('../assets/img/avatar.png')}
+            />
+          )}
 
-        <TextInput
-          placeholder="Nome"
-          value={nome}
-          onChangeText={setNome}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="E-mail"
-          value={email}
-          onChangeText={setEmail}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Senha"
-          value={senha}
-          onChangeText={setsenha}
-          secureTextEntry
-          style={styles.input}
-        />
+          <TextInput
+            placeholder="Nome"
+            value={nome}
+            onChangeText={setNome}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="E-mail"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Senha"
+            value={senha}
+            onChangeText={setsenha}
+            secureTextEntry
+            style={styles.input}
+          />
 
-        <Pressable style={styles.button_editar}>
-          <Text style={styles.buttonText}>Salvar Alterações</Text>
-        </Pressable>
+          <Pressable style={styles.button_editar} onPress={() => editarUsuario()}>
+            <Text style={styles.buttonText}>Salvar Alterações</Text>
+          </Pressable>
+        </View>
       </View>
-
       <AwesomeAlert
-        show={alertVisible}
+        show={showAlert}
         showProgress={false}
-        title="Sucesso!"
-        titleStyle={styles.alertTitle}
-        message="O usuário foi atualizado com sucesso!"
-        messageStyle={styles.alertMessage}
+        title="Informações atualizadas"
+        titleStyle={{
+          textAlign: 'center',
+          fontSize: 20,
+          fontWeight: 'bold',
+          color: '#00b5b8',
+        }}
+        message="Suas informações foram editadas com sucesso."
+        messageStyle={{
+          textAlign: 'center',
+          fontSize: 16,
+          color: '#f8f8f2',
+        }}
         closeOnTouchOutside={true}
-        closeOnHardwareBackPress={false}
-        showCancelButton={false}
+        closeOnHardwareBackPress={true}
         showConfirmButton={true}
-        confirmText="Fechar"
-        confirmButtonColor="#ff79c6"
-        confirmButtonStyle={styles.alertButton}
-        confirmButtonTextStyle={styles.alertButtonText}
-        contentContainerStyle={styles.alertContainer}
+        confirmText="Confirmar"
+        confirmButtonColor="#00b5b8"
+        confirmButtonStyle={{
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+        }}
+        confirmButtonTextStyle={{
+          fontWeight: 'bold',
+          fontSize: 16,
+        }}
+        contentContainerStyle={{
+          backgroundColor: '#282a36',
+          borderRadius: 10,
+          padding: 20,
+        }}
+        onConfirmPressed={() => setAlertVisible(false)}
       />
-    </View>
+    </View >
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 25,
     justifyContent: 'center',
     backgroundColor: '#fff',
+  },
+  container_Box: {
+    padding: 20,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Poppins-Regular',
     marginBottom: 20,
   },
   box: {
@@ -212,34 +236,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontFamily: 'Poppins-Regular',
-  },
-  alertContainer: {
-    backgroundColor: '#282a36',
-    borderRadius: 12,
-    padding: 22,
-  },
-  alertTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#00b5b8',
-    textAlign: 'center',
-  },
-  alertMessage: {
-    fontSize: 16,
-    color: '#f8f8f2',
-    textAlign: 'center',
-    marginTop: 10,
-  },
-  alertButton: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    backgroundColor: '#4a90e2',
-    borderRadius: 8,
-  },
-  alertButtonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
   },
 });

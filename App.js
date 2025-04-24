@@ -9,6 +9,7 @@ import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import Inicio from './src/screens/Home';
 import PerfilScreen from './src/screens/Perfil';
 import NovoPostScreen from './src/screens/NovoPost';
+import ChatScreen from './src/screens/ChatScreen';
 import Direct from './src/screens/Direct';
 import Login from './src/screens/Login';
 import Cadastro from './src/screens/Cadastro';
@@ -92,6 +93,7 @@ export default function App() {
         <Stack.Screen name="Cadastro" component={Cadastro} screenOptions={{ headerShown: false }} />
         <Stack.Screen name="Inicio" component={TabsNavigator} screenOptions={{ headerShown: false }} />
         <Stack.Screen name="Direct" component={Direct} screenOptions={{ headerShown: false }} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} screenOptions={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
