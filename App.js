@@ -11,6 +11,7 @@ import PerfilScreen from './src/screens/Perfil';
 import NovoPostScreen from './src/screens/NovoPost';
 import ChatScreen from './src/screens/ChatScreen';
 import Direct from './src/screens/Direct';
+import TelaSplash from './src/screens/TelaSplash';
 import Login from './src/screens/Login';
 import Cadastro from './src/screens/Cadastro';
 import { NavigationContainer } from '@react-navigation/native';
@@ -30,6 +31,9 @@ function CustomHeader({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate('Direct')}>
           <FontAwesome style={styles.icone} name="send" size={24} color="white" />
           <Text style={styles.direct}>Direct</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <FontAwesome style={styles.icone} name="sign-out" size={30} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -89,6 +93,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="TelaSplash" component={TelaSplash} screenOptions={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} screenOptions={{ headerShown: false }} />
         <Stack.Screen name="Cadastro" component={Cadastro} screenOptions={{ headerShown: false }} />
         <Stack.Screen name="Inicio" component={TabsNavigator} screenOptions={{ headerShown: false }} />
@@ -124,7 +129,12 @@ const styles = StyleSheet.create({
   icone: {
     alignSelf: 'center'
   },
-
+  menuIcon: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 100,
+  },
   direct: {
     alignContent: 'center',
     alignSelf: 'center',

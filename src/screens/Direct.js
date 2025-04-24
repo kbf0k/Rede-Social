@@ -61,9 +61,6 @@ export default function Direct({ navigation }) {
                     <Ionicons name="arrow-back" size={24} color="#fff" />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Direct</Text>
-                <TouchableOpacity>
-                    <Ionicons name="create-outline" size={24} color="#fff" />
-                </TouchableOpacity>
             </View>
             <FlatList
                 data={usuarios}
@@ -84,7 +81,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#ff8c00',
         padding: 16,
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
     backButton: {
@@ -104,7 +100,7 @@ const styles = StyleSheet.create({
         padding: 14,
         marginHorizontal: 12,
         marginVertical: 6,
-        backgroundColor: 'rgba(0, 181, 184, 0.3)',
+        backgroundColor: 'rgba(255, 140, 0, 0.45)',
         borderRadius: 16,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },

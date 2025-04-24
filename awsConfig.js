@@ -1,1 +1,12 @@
 // Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
+import AWS from "aws-sdk";
+
+const s3 = new AWS.S3({
+    accessKeyId: "ASIAQTY7H67RASBZSOBE",
+    secretAccessKey: "OYVzkYdP+WEVGRgPqQ8LHMpP02e6+pw7ACe1z60L",
+    sessionToken: "IQoJb3JpZ2luX2VjEHsaCXVzLXdlc3QtMiJIMEYCIQDrLPTsUMSgOw9itWOX88wVcoHtu9bLzzyw1+oWwjlmCQIhALQ7kfpC5HawVE2n52U9a7znha5HOG8bZqEK8Twr8djUKrACCBQQABoMMDQyNDc4MzM1OTcwIgyiO/qJncP6doBBhjEqjQIcSJItA2i6qRLj2NkhnVVlFTJELwEyPJYdvnpRnViZnQ08m9smLPXT2txlUch9o/x5kAuwBGY2hZzFCrZEoz/ALQXGXnPNX5iGXiQdIPvImlScn9WoRow4WnM8DHb10Xsyy+PudwV7YA+N+bp1ykafiFyk0ag5IkkK8mClWKu86e/7GdbZZPpNfN3VCuDqMsfxQ2zT8cdj+fe6PXvunF94MoapN2RjNvTpKkiLwHWdpL0lzN6asY0fVQbNIPs/BzBbHx72/q0sQhQtLkvBbNj+bDUMQt7tEwbezI2GyzmSGCbk6pGC14wkW2xHVwEchQmj71sefLp+2PAua5dv0vNjq17o4zeUaX6dYSsuKzCPr6jABjqcATPzJk0RpEXbQWWywREJfczQCC9YVauKmJAnyFLTVWTlAtzcB5bsXQ6dj+TRUU638AK/t7SIoxZfM4jYJ67oSIdppda7a8XgVR4NfY4z9AirgSaOzoGpNF8jCfrIrVZYGmEND3csQq0LqFRQSjl6VJFBx+N8PL73z8GHiVD5DWIDjaNEpueGcEVBAKz0DCn1o2Oicwegg35bimKTJA==",
+    region: "us-east-1",
+});
+
+
+export default s3;

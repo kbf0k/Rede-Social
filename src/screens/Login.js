@@ -171,20 +171,15 @@ const styles = StyleSheet.create({
     },
 
     criar_conta: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        padding: 10,
-        marginTop: 20
+        textAlign: 'center',
     },
 
     textoConta: {
         fontFamily: 'Poppins-Regular',
         fontSize: 14,
         color: '#fff',
-        marginTop: 20,
+        marginTop: 30,
         textAlign: 'center',
-        marginRight: 30,
         maxWidth: 'auto'
     },
 
