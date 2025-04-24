@@ -1,4 +1,5 @@
-// Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
+
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';

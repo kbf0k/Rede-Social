@@ -1,4 +1,4 @@
-// Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
 
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';

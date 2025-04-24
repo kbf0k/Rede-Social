@@ -1,3 +1,5 @@
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
+
 import React, { useEffect, useRef } from "react";
 import { Animated, Image, StyleSheet, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";

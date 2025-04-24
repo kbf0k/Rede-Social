@@ -1,4 +1,5 @@
-// Kaique Bernardes Ferreira Joao Pedro da Cunha Machado
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import * as ImagePicker from "expo-image-picker";

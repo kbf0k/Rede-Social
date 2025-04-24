@@ -1,3 +1,5 @@
+// Kaique Bernardes Ferreira e João Pedro da Cunha Machado
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, Timestamp, getDocs } from 'firebase/firestore';
